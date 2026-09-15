@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.6.1] - 2026-09-15
+
+### Fixed
+- Project URLs, CI badge, and clone path now point at `nahiarhd/NLP_nahiarhd`
+
 ## [1.6.0] - 2026-09-15
 
 ### Added

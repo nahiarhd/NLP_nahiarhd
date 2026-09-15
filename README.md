@@ -4,7 +4,7 @@
 
 ### Advanced Indonesian Natural Language Processing Library
 
-[![CI](https://github.com/raihanhd12/nahiarhdNLP/actions/workflows/ci.yml/badge.svg)](https://github.com/raihanhd12/nahiarhdNLP/actions)
+[![CI](https://github.com/nahiarhd/NLP_nahiarhd/actions/workflows/ci.yml/badge.svg)](https://github.com/nahiarhd/NLP_nahiarhd/actions)
 [![PyPI version](https://img.shields.io/pypi/v/nahiarhdNLP.svg)](https://pypi.org/project/nahiarhdNLP/)
 [![Python Version](https://img.shields.io/pypi/pyversions/nahiarhdNLP.svg)](https://pypi.org/project/nahiarhdNLP/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -67,7 +67,7 @@ pip install nahiarhdNLP
 ### From source
 
 ```bash
-git clone https://github.com/raihanhd12/nahiarhdNLP.git
+git clone https://github.com/nahiarhd/NLP_nahiarhd.git
 cd nahiarhdNLP
 pip install -e .
 ```
@@ -1203,10 +1203,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-![GitHub stars](https://img.shields.io/github/stars/raihanhd12/nahiarhdNLP?style=social)
-![GitHub forks](https://img.shields.io/github/forks/raihanhd12/nahiarhdNLP?style=social)
-![GitHub issues](https://img.shields.io/github/issues/raihanhd12/nahiarhdNLP)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/raihanhd12/nahiarhdNLP)
+![GitHub stars](https://img.shields.io/github/stars/nahiarhd/NLP_nahiarhd?style=social)
+![GitHub forks](https://img.shields.io/github/forks/nahiarhd/NLP_nahiarhd?style=social)
+![GitHub issues](https://img.shields.io/github/issues/nahiarhd/NLP_nahiarhd)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/nahiarhd/NLP_nahiarhd)
 
 ---
 

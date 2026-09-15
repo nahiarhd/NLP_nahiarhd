@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nahiarhdNLP"
-version = "1.6.0"
+version = "1.6.1"
 description = "Advanced Indonesian Natural Language Processing Library"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -33,10 +33,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/raihanhd12/nahiarhdNLP"
-Documentation = "https://github.com/raihanhd12/nahiarhdNLP#readme"
-Repository = "https://github.com/raihanhd12/nahiarhdNLP"
-Issues = "https://github.com/raihanhd12/nahiarhdNLP/issues"
+Homepage = "https://github.com/nahiarhd/NLP_nahiarhd"
+Documentation = "https://github.com/nahiarhd/NLP_nahiarhd#readme"
+Repository = "https://github.com/nahiarhd/NLP_nahiarhd"
+Issues = "https://github.com/nahiarhd/NLP_nahiarhd/issues"
+Changelog = "https://github.com/nahiarhd/NLP_nahiarhd/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
