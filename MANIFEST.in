@@ -1,6 +1,6 @@
 include README.md
 include LICENSE
 include pyproject.toml
-recursive-include nahiarhdNLP *.py *.txt *.csv *.json py.typed
+recursive-include nahiarhdNLP *.py *.csv *.json py.typed
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

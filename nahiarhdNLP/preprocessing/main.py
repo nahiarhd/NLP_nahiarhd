@@ -93,6 +93,49 @@ class Pipeline:
         self.functions = tuple()
         self._build_functions_from_config()
 
+    @classmethod
+    def social(cls):
+        """Clean social posts: keep usernames/tags, drop URLs and HTML."""
+        return cls(
+            {
+                "clean_html": True,
+                "clean_mentions": True,
+                "clean_hashtags": True,
+                "remove_urls": True,
+                "remove_extra_spaces": True,
+                "remove_repeated_chars": True,
+            }
+        )
+
+    @classmethod
+    def formal(cls):
+        """Normalize prose for classical NLP: lower, stopwords, stem."""
+        return cls(
+            {
+                "clean_html": True,
+                "remove_urls": True,
+                "remove_emoji": True,
+                "remove_punctuation": True,
+                "remove_lowercase": True,
+                "remove_extra_spaces": True,
+                "stopword": True,
+                "stem": True,
+            }
+        )
+
+    @classmethod
+    def anonymize(cls):
+        """Replace emails, URLs, and mentions with placeholders."""
+        return cls(
+            {
+                "clean_html": True,
+                "replace_email": True,
+                "replace_link": True,
+                "replace_user": True,
+                "remove_phones": True,
+            }
+        )
+
     def _build_functions_from_config(self):
 
         # mapping step -> callable (internal only)
@@ -210,8 +253,11 @@ class Pipeline:
         if not text:
             return text
         result = text
-        for func in self.functions:
+        last_index = len(self.functions) - 1
+        for i, func in enumerate(self.functions):
             result = func(result)
+            if i != last_index and not isinstance(result, str):
+                raise TypeError("tokenizer must be the last pipeline step")
         return result
 
     def update_config(self, new_config: dict) -> None:

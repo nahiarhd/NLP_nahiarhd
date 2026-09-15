@@ -75,7 +75,7 @@ pip install -e .
 ### Requirements
 
 - Python >= 3.10
-- sastrawi >= 1.0.1
+- PySastrawi >= 1.2.0
 
 ---
 
@@ -100,6 +100,16 @@ result = pipeline.process(text)
 
 print(result)
 # Output: "Haii Cek website kita ya 😊"
+```
+
+Named presets for the three jobs people actually run:
+
+```python
+from nahiarhdNLP.preprocessing import Pipeline
+
+Pipeline.social().process("Hai @teman cek https://example.com #NLP")
+Pipeline.formal().process("Saya sedang belajar pemrograman")
+Pipeline.anonymize().process("hubungi john@example.com atau @admin")
 ```
 
 ---

@@ -16,7 +16,7 @@ class Stemmer:
     def __init__(self):
         if not _sastrawi_available:
             raise ImportError(
-                "Sastrawi belum terinstall. Install dengan: pip install Sastrawi"
+                "Sastrawi belum terinstall. Install dengan: pip install PySastrawi"
             )
         factory = StemmerFactory()
         self.stemmer = factory.create_stemmer()

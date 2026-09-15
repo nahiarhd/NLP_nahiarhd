@@ -1,1 +1,1 @@
-sastrawi>=1.0.1
+PySastrawi>=1.2.0
