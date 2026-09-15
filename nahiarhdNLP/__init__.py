@@ -6,7 +6,7 @@ nahiarhdNLP - Advanced Indonesian Natural Language Processing Library
 from . import datasets, preprocessing
 
 # Version info
-__version__ = "1.6.1"
+__version__ = "1.6.2"
 __author__ = "Raihan Hidayatullah Djunaedi"
 __email__ = "raihanhd.dev@gmail.com"
 

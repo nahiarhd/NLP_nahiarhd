@@ -478,7 +478,7 @@ def main():
         "\n[green]All 28 features demonstrated successfully![/green]", justify="center"
     )
     console.print(
-        "[cyan]For more information, visit: https://github.com/nahiarhd/NLP_nahiarhd[/cyan]\n",
+        "[cyan]For more information, visit: https://github.com/nahiarhd/nahiarhdNLP[/cyan]\n",
         justify="center",
     )
 

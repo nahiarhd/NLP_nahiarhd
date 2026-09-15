@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.6.2] - 2026-09-15
+
+### Changed
+- GitHub repository renamed from `NLP_nahiarhd` to `nahiarhdNLP`
+
 ## [1.6.1] - 2026-09-15
 
 ### Fixed
