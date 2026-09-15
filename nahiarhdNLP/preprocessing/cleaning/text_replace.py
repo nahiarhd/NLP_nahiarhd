@@ -9,9 +9,11 @@ import re
 
 class TextReplace:
     def __init__(self, **kwargs):
-        self.replace_email = kwargs.get("replace_email", True)
-        self.replace_link = kwargs.get("replace_link", True)
-        self.replace_user = kwargs.get("replace_user", True)
+        self._flags = {
+            "replace_email": kwargs.get("replace_email", True),
+            "replace_link": kwargs.get("replace_link", True),
+            "replace_user": kwargs.get("replace_user", True),
+        }
 
     def replace_email(self, text: str, force: bool = False) -> str:
         """Replace email addresses in `text` with `token`.
@@ -20,7 +22,7 @@ class TextReplace:
             replace_email("Contact me at john.doe@gmail.com")
             -> "Contact me at <email>"
         """
-        if not self.replace_email and not force:
+        if not self._flags["replace_email"] and not force:
             return text
 
         email_pattern = re.compile(
@@ -36,7 +38,7 @@ class TextReplace:
             replace_link("Visit http://example.com for more info")
             -> "Visit <link> for more info"
         """
-        if not self.replace_link and not force:
+        if not self._flags["replace_link"] and not force:
             return text
 
         url_pattern = re.compile(r"(https?://[^\s]+|www\.[^\s]+)")
@@ -50,7 +52,7 @@ class TextReplace:
             replace_user("Hello @user1 and @user2")
             -> "Hello <user> and <user>"
         """
-        if not self.replace_user and not force:
+        if not self._flags["replace_user"] and not force:
             return text
 
         user_pattern = re.compile(r"@\w+")
@@ -59,8 +61,4 @@ class TextReplace:
 
     def get_options(self) -> dict:
         """Get current replacement options."""
-        return {
-            "replace_email": self.replace_email,
-            "replace_link": self.replace_link,
-            "replace_user": self.replace_user,
-        }
+        return dict(self._flags)

@@ -12,26 +12,15 @@ class SpellCorrector:
 
     def __init__(self):
         self.slang_dict = {}
-        self.wordlist = []
+        self.wordlist = set()
         self._load_data()
 
     def _load_data(self):
         """Load slang dictionary dan wordlist menggunakan DatasetLoader."""
-        try:
-            loader = DatasetLoader()
-
-            # Load slang dictionary
-            slang_data = loader.load_slang_dataset()
-            self.slang_dict = {item["slang"]: item["formal"] for item in slang_data}
-
-            # Load wordlist
-            self.wordlist = loader.load_wordlist_dataset()
-
-        except Exception as e:
-            print(f"Warning: Error loading spell correction data: {e}")
-            # Fallback ke mapping manual jika file tidak bisa dibaca
-            self.slang_dict = {}
-            self.wordlist = []
+        loader = DatasetLoader()
+        slang_data = loader.load_slang_dataset()
+        self.slang_dict = {item["slang"]: item["formal"] for item in slang_data}
+        self.wordlist = set(loader.load_wordlist_dataset())
 
     def correct_word(self, word: str) -> str:
         """Koreksi satu kata."""

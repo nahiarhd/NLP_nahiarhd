@@ -3,7 +3,6 @@ Stopword remover for Indonesian text processing.
 """
 
 import re
-from typing import List
 
 from nahiarhdNLP.datasets.loaders import DatasetLoader
 
@@ -19,17 +18,12 @@ class StopwordRemover:
             **kwargs: Additional arguments
         """
         self.language = language
-        self.stopwords: List[str] = []
+        self.stopwords: set = set()
 
     def _load_data(self):
         """Load stopwords data dari CSV."""
-        try:
-            loader = DatasetLoader()
-            dataset = loader.load_stopwords_dataset(language=self.language)
-            self.stopwords = dataset
-        except Exception as e:
-            print(f"Warning: Could not load stopwords dataset: {e}")
-            self.stopwords = []
+        loader = DatasetLoader()
+        self.stopwords = set(loader.load_stopwords_dataset(language=self.language))
 
     def is_stopword(self, word: str) -> bool:
         """Check if a word is a stopword."""

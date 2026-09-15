@@ -1,84 +1,94 @@
+import ast
+import csv
 import json
 from pathlib import Path
 
-import pandas as pd
+
+def _parse_aliases(raw):
+    """Parse the aliases CSV cell as a Python list literal.
+
+    Source: https://docs.python.org/3/library/ast.html#ast.literal_eval
+    """
+    if not raw or raw.strip() in {"nan"}:
+        return []
+    try:
+        parsed = ast.literal_eval(raw)
+    except (ValueError, SyntaxError):
+        return []
+    if isinstance(parsed, list):
+        return [str(item) for item in parsed if item]
+    return []
 
 
 class DatasetLoader:
-    """Loader untuk dataset NLP Indonesia dari file CSV lokal."""
+    """Loader untuk dataset NLP Indonesia dari file CSV/JSON lokal."""
 
-    def __init__(self):
-        # Path ke folder datasets
-        self.datasets_dir = Path(__file__).parent
+    def __init__(self, datasets_dir=None):
+        self.datasets_dir = Path(datasets_dir) if datasets_dir is not None else Path(__file__).parent
+
+    def _open_csv(self, filename):
+        # newline="" is required so the csv module handles embedded newlines.
+        # Source: https://docs.python.org/3/library/csv.html#csv.reader
+        path = self.datasets_dir / filename
+        return path.open(newline="", encoding="utf-8")
 
     def load_stopwords_dataset(self, language="indonesian"):
         """Load stopwords dari CSV."""
-        csv_path = self.datasets_dir / "stop_word.csv"
+        del language
         try:
-            df = pd.read_csv(csv_path)
-            # Kolom: stopword
-            data = df["stopword"].dropna().astype(str).tolist()
-            return data
-        except Exception as e:
-            print(f"Error loading stopwords from CSV: {e}")
+            with self._open_csv("stop_word.csv") as handle:
+                reader = csv.DictReader(handle)
+                return [
+                    row["stopword"]
+                    for row in reader
+                    if row.get("stopword")
+                ]
+        except OSError:
             return []
 
     def load_slang_dataset(self, language="indonesian"):
         """Load slang dari CSV."""
-        csv_path = self.datasets_dir / "slang.csv"
+        del language
         try:
-            df = pd.read_csv(csv_path)
-            # Kolom: slang, formal
-            data = []
-            for idx in range(len(df)):
-                slang_val = df.iloc[idx, 0]
-                formal_val = df.iloc[idx, 1]
-                if pd.notnull(slang_val) and pd.notnull(formal_val):
-                    data.append({"slang": str(slang_val), "formal": str(formal_val)})
-            return data
-        except Exception as e:
-            print(f"Error loading slang from CSV: {e}")
+            with self._open_csv("slang.csv") as handle:
+                reader = csv.DictReader(handle)
+                data = []
+                for row in reader:
+                    slang_val = row.get("slang")
+                    formal_val = row.get("formal")
+                    if slang_val and formal_val:
+                        data.append({"slang": slang_val, "formal": formal_val})
+                return data
+        except OSError:
             return []
 
     def load_emoji_dataset(self, language="indonesian"):
         """Load emoji dari CSV."""
-        csv_path = self.datasets_dir / "emoji.csv"
+        del language
         try:
-            df = pd.read_csv(csv_path)
-            # Kolom: emoji, name_id, alias, aliases (aliases berupa string list)
-            data = []
-            for idx in range(len(df)):
-                row = df.iloc[idx]
-                aliases_val = row.get("aliases", "")
-                aliases_list = []
-                if pd.notnull(aliases_val):
-                    aliases_str = str(aliases_val).strip()
-                    if aliases_str and aliases_str != "nan":
-                        try:
-                            aliases_list = eval(aliases_str)
-                        except Exception as e:
-                            print(f"Error loading emoji from CSV: {e}")
-                            aliases_list = []
-
-                item = {
-                    "emoji": str(row.get("emoji", "")),
-                    "name_id": str(row.get("name_id", "")),
-                    "alias": str(row.get("alias", "")),
-                    "aliases": aliases_list,
-                }
-                data.append(item)
-            return data
-        except Exception as e:
-            print(f"Error loading emoji from CSV: {e}")
+            with self._open_csv("emoji.csv") as handle:
+                reader = csv.DictReader(handle)
+                data = []
+                for row in reader:
+                    data.append(
+                        {
+                            "emoji": row.get("emoji") or "",
+                            "name_id": row.get("name_id") or "",
+                            "alias": row.get("alias") or "",
+                            "aliases": _parse_aliases(row.get("aliases") or ""),
+                        }
+                    )
+                return data
+        except OSError:
             return []
 
     def load_wordlist_dataset(self, language="indonesian"):
         """Load wordlist dari JSON."""
+        del language
         json_path = self.datasets_dir / "wordlist.json"
         try:
-            with open(json_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            with json_path.open(encoding="utf-8") as handle:
+                data = json.load(handle)
             return data if isinstance(data, list) else []
-        except Exception as e:
-            print(f"Error loading wordlist from JSON: {e}")
+        except (OSError, json.JSONDecodeError):
             return []

@@ -1,8 +1,1 @@
-pandas
-Sastrawi
-rich
-build
-twine
-nahiarhdNLP
-pytest
-pytest-cov
+sastrawi>=1.0.1

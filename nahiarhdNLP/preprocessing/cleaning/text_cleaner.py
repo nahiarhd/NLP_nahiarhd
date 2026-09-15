@@ -15,21 +15,24 @@ class TextCleaner:
             language: Language code
             **kwargs: Additional arguments
         """
-        self.remove_html = kwargs.get("remove_html", True)
-        self.remove_urls = kwargs.get("remove_urls", True)
-        self.remove_mentions = kwargs.get("remove_mentions", True)
-        self.remove_hashtags = kwargs.get("remove_hashtags", True)
-        self.remove_punctuation = kwargs.get("remove_punctuation", False)
-        self.remove_emoji = kwargs.get("remove_emoji", False)
-        self.remove_lowercase = kwargs.get("remove_lowercase", True)
-        self.remove_extra_spaces = kwargs.get("remove_extra_spaces", True)
-        self.remove_repeated_chars = kwargs.get("remove_repeated_chars", True)
-        self.remove_special_chars = kwargs.get("remove_special_chars", True)
-        self.remove_whitespace = kwargs.get("remove_whitespace", True)
-        self.remove_emails = kwargs.get("remove_emails", False)
-        self.remove_phones = kwargs.get("remove_phones", False)
-        self.remove_currency = kwargs.get("remove_currency", False)
-        self.remove_numbers = kwargs.get("remove_numbers", False)
+        # Flags live in _flags so they do not shadow the methods of the same name.
+        self._flags = {
+            "remove_html": kwargs.get("remove_html", True),
+            "remove_urls": kwargs.get("remove_urls", True),
+            "remove_mentions": kwargs.get("remove_mentions", True),
+            "remove_hashtags": kwargs.get("remove_hashtags", True),
+            "remove_punctuation": kwargs.get("remove_punctuation", False),
+            "remove_emoji": kwargs.get("remove_emoji", False),
+            "remove_lowercase": kwargs.get("remove_lowercase", True),
+            "remove_extra_spaces": kwargs.get("remove_extra_spaces", True),
+            "remove_repeated_chars": kwargs.get("remove_repeated_chars", True),
+            "remove_special_chars": kwargs.get("remove_special_chars", True),
+            "remove_whitespace": kwargs.get("remove_whitespace", True),
+            "remove_emails": kwargs.get("remove_emails", False),
+            "remove_phones": kwargs.get("remove_phones", False),
+            "remove_currency": kwargs.get("remove_currency", False),
+            "remove_numbers": kwargs.get("remove_numbers", False),
+        }
 
     def remove_urls(self, text: str, force: bool = False) -> str:
         """Remove URLs from text.
@@ -41,7 +44,7 @@ class TextCleaner:
         Returns:
             Text with URLs removed
         """
-        if not self.remove_urls and not force:
+        if not self._flags["remove_urls"] and not force:
             return text
 
         # Pattern untuk URL - replace with space to preserve word boundaries
@@ -60,7 +63,7 @@ class TextCleaner:
         Returns:
             Text with mentions removed
         """
-        if not self.remove_mentions and not force:
+        if not self._flags["remove_mentions"] and not force:
             return text
 
         # Pattern untuk mentions - replace with space to preserve word boundaries
@@ -79,7 +82,7 @@ class TextCleaner:
         Returns:
             Text with hashtags removed
         """
-        if not self.remove_hashtags and not force:
+        if not self._flags["remove_hashtags"] and not force:
             return text
 
         # Pattern untuk hashtags - replace with space to preserve word boundaries
@@ -98,7 +101,7 @@ class TextCleaner:
         Returns:
             Text with punctuation removed
         """
-        if not self.remove_punctuation and not force:
+        if not self._flags["remove_punctuation"] and not force:
             return text
 
         # Pattern untuk punctuation - replace with space to preserve word boundaries
@@ -116,7 +119,7 @@ class TextCleaner:
         Returns:
             Lowercase text
         """
-        if not self.remove_lowercase:
+        if not self._flags["remove_lowercase"]:
             return text
 
         return text.lower()
@@ -130,7 +133,7 @@ class TextCleaner:
         Returns:
             Text with extra spaces removed
         """
-        if not self.remove_extra_spaces:
+        if not self._flags["remove_extra_spaces"]:
             return text
 
         # Replace multiple spaces with single space
@@ -146,7 +149,7 @@ class TextCleaner:
         Returns:
             Text with repeated characters normalized
         """
-        if not self.remove_repeated_chars:
+        if not self._flags["remove_repeated_chars"]:
             return text
 
         # Pattern untuk repeated characters (3+ times)
@@ -178,7 +181,7 @@ class TextCleaner:
         Returns:
             Text with HTML tags removed
         """
-        if not self.remove_html and not force:
+        if not self._flags["remove_html"] and not force:
             return text
 
         # Pattern untuk HTML tags - replace with space to preserve word boundaries
@@ -197,7 +200,7 @@ class TextCleaner:
         Returns:
             Text with emoji removed
         """
-        if not self.remove_emoji and not force:
+        if not self._flags["remove_emoji"] and not force:
             return text
 
         # Pattern untuk emoji (Unicode ranges)
@@ -237,7 +240,7 @@ class TextCleaner:
         Returns:
             Text with emails processed
         """
-        if not self.remove_emails and not force:
+        if not self._flags["remove_emails"] and not force:
             return text
 
         if keep_text:
@@ -267,7 +270,7 @@ class TextCleaner:
         Returns:
             Text with phone numbers processed
         """
-        if not self.remove_phones and not force:
+        if not self._flags["remove_phones"] and not force:
             return text
 
         result = text
@@ -311,7 +314,7 @@ class TextCleaner:
         Returns:
             Text with currency processed
         """
-        if not self.remove_currency and not force:
+        if not self._flags["remove_currency"] and not force:
             return text
 
         if keep_numbers:
@@ -336,7 +339,7 @@ class TextCleaner:
         Returns:
             Text with numbers removed
         """
-        if not self.remove_numbers and not force:
+        if not self._flags["remove_numbers"] and not force:
             return text
 
         # Pattern untuk numbers - replace with space to preserve word boundaries
@@ -351,20 +354,4 @@ class TextCleaner:
         Returns:
             Dictionary of current options
         """
-        return {
-            "remove_html": self.remove_html,
-            "remove_urls": self.remove_urls,
-            "remove_mentions": self.remove_mentions,
-            "remove_hashtags": self.remove_hashtags,
-            "remove_numbers": self.remove_numbers,
-            "remove_punctuation": self.remove_punctuation,
-            "remove_emoji": self.remove_emoji,
-            "remove_lowercase": self.remove_lowercase,
-            "remove_extra_spaces": self.remove_extra_spaces,
-            "remove_repeated_chars": self.remove_repeated_chars,
-            "remove_special_chars": self.remove_special_chars,
-            "remove_whitespace": self.remove_whitespace,
-            "remove_emails": self.remove_emails,
-            "remove_phones": self.remove_phones,
-            "remove_currency": self.remove_currency,
-        }
+        return dict(self._flags)

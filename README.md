@@ -4,6 +4,7 @@
 
 ### Advanced Indonesian Natural Language Processing Library
 
+[![CI](https://github.com/raihanhd12/nahiarhdNLP/actions/workflows/ci.yml/badge.svg)](https://github.com/raihanhd12/nahiarhdNLP/actions)
 [![PyPI version](https://img.shields.io/pypi/v/nahiarhdNLP.svg)](https://pypi.org/project/nahiarhdNLP/)
 [![Python Version](https://img.shields.io/pypi/pyversions/nahiarhdNLP.svg)](https://pypi.org/project/nahiarhdNLP/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -73,10 +74,8 @@ pip install -e .
 
 ### Requirements
 
-- Python >= 3.8
-- pandas >= 1.3.0
+- Python >= 3.10
 - sastrawi >= 1.0.1
-- rich >= 12.0.0
 
 ---
 
@@ -1130,25 +1129,6 @@ pip install -e ".[dev]"
 
 # Run tests
 pytest
-
-# Run tests with coverage
-pytest --cov=nahiarhdNLP --cov-report=html
-
-# Run specific test file
-pytest nahiarhdNLP/tests/test_pipeline.py
-```
-
-### Code Formatting
-
-```bash
-# Format code with black
-black nahiarhdNLP/
-
-# Sort imports with isort
-isort nahiarhdNLP/
-
-# Lint with flake8
-flake8 nahiarhdNLP/
 ```
 
 ### Building Package

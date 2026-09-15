@@ -15,10 +15,12 @@ class TextCleanerWord:
             language: Language code
             **kwargs: Additional arguments
         """
-        self.clean_urls = kwargs.get("clean_urls", True)
-        self.clean_mentions = kwargs.get("clean_mentions", True)
-        self.clean_hashtags = kwargs.get("clean_hashtags", True)
-        self.clean_html = kwargs.get("clean_html", True)
+        self._flags = {
+            "clean_urls": kwargs.get("clean_urls", True),
+            "clean_mentions": kwargs.get("clean_mentions", True),
+            "clean_hashtags": kwargs.get("clean_hashtags", True),
+            "clean_html": kwargs.get("clean_html", True),
+        }
 
     def clean_urls(self, text: str, force: bool = False) -> str:
         """Remove URL protocols (http:// or https://) but keep the rest of the URL.
@@ -30,7 +32,7 @@ class TextCleanerWord:
         Returns:
             Text with URL protocols removed
         """
-        if not self.clean_urls and not force:
+        if not self._flags["clean_urls"] and not force:
             return text
 
         # Pattern untuk URL protocols
@@ -49,7 +51,7 @@ class TextCleanerWord:
         Returns:
             Text with @ removed from mentions
         """
-        if not self.clean_mentions and not force:
+        if not self._flags["clean_mentions"] and not force:
             return text
 
         # Pattern untuk mentions, remove @ but keep the word with space
@@ -68,7 +70,7 @@ class TextCleanerWord:
         Returns:
             Text with # removed from hashtags
         """
-        if not self.clean_hashtags and not force:
+        if not self._flags["clean_hashtags"] and not force:
             return text
 
         # Pattern untuk hashtags, remove # but keep the word with space
@@ -87,7 +89,7 @@ class TextCleanerWord:
         Returns:
             Text with HTML tags removed
         """
-        if not self.clean_html and not force:
+        if not self._flags["clean_html"] and not force:
             return text
 
         # Pattern untuk HTML tags - replace with space to preserve word boundaries
@@ -102,9 +104,4 @@ class TextCleanerWord:
         Returns:
             Dictionary of current options
         """
-        return {
-            "clean_html": self.clean_html,
-            "clean_urls": self.clean_urls,
-            "clean_mentions": self.clean_mentions,
-            "clean_hashtags": self.clean_hashtags,
-        }
+        return dict(self._flags)

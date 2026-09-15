@@ -55,8 +55,7 @@ class EmojiConverter:
                         if alias_word and emoji:
                             self.text_to_emoji[alias_word.lower()] = emoji
 
-        except Exception as e:
-            print(f"Warning: Could not load emoji dataset: {e}")
+        except OSError:
             self.emoji_data = []
             self.emoji_to_text = {}
             self.text_to_emoji = {}
